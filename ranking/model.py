@@ -5,15 +5,18 @@ import redis
 
 class Ranking(object):
 
-    def __init__(self, key, user_id, **kwargs):
+    def __init__(self, key, user_id, client=None, **kwargs):
         self.key = key
         self.user_id = user_id
-        self.redis = redis.StrictRedis(**kwargs)
+        if client:
+            self.redis = client
+        else:
+            self.redis = redis.StrictRedis(**kwargs)
 
     def __get_rank(self, redis=None):
         if not redis:
             redis = self.redis
-        return redis.zrerank(self.key, self.user_id)
+        return redis.zrevrank(self.key, self.user_id) + 1
 
     def __get_score(self, redis=None):
         if not redis:
@@ -37,16 +40,20 @@ class Ranking(object):
     def add(self, score):
         with self.redis.pipeline() as pipe:
             pipe.multi()
-            pipe.zadd(self.key, self.user_id, score)
+            pipe.zadd(self.key, score, self.user_id)
             self._rank = self.__get_rank(pipe)
             self._score = self.__score(pipe)
 
             pipe.execute()
 
     @classmethod
-    def get_range(cls, begin, end):
-        pass
+    def get_range(cls, key, begin, end, client=None, **kwargs):
+        if not client:
+            client = redis.StrictRedis(**kwargs)
+        return client.zrevrange(key, begin - 1, end - 1, withscores=True)
 
     @classmethod
-    def get_all(cls):
-        pass
+    def get_all(cls, key, client=None, **kwargs):
+        if not client:
+            client = redis.StrictRedis(**kwargs)
+        return client.zrevrange(key, 0, -1, withscores=True)
