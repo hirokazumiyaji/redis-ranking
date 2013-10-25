@@ -8,10 +8,10 @@ python:
 install:
   - pip install -e . --use-mirrors
   - "if [[ $TEST_PEP8 == '1' ]]; then pip install pep8 --use-mirrors; fi"
-script: "if [[ $TEST_PEP8 == '1' ]]; then pep8 --repeat --show-source --exclude=.venv,.tox,dist,doc,build,*.egg .; else python setup test; if"
+script: "pep8 --repeat --show-source --exclude=.venv,.tox,dist,doc,build,*.egg .; python setup test;"
+services:
+  - redis-server
 matrix:
   include:
     - python: "2.7"
-      env: TEST_PEP8=1
     - python: "3.3"
-      env: TEST_PEP8=1
