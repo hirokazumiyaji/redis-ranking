@@ -6,6 +6,7 @@ python:
   - "pypy"
 install:
   - pip install -e . --use-mirrors
+  - pip install redis --use-mirrors
   - pip install pep8 --use-mirrors
   - pip install nose --use-mirrors
 script:
