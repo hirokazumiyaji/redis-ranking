@@ -3,12 +3,12 @@ python:
   - "3.3"
   - "3.2"
   - "2.7"
-  - "2.6"
-  - "2.5"
 install:
   - pip install -e . --use-mirrors
-  - "if [[ $TEST_PEP8 == '1' ]]; then pip install pep8 --use-mirrors; fi"
-script: "pep8 --repeat --show-source --exclude=.venv,.tox,dist,doc,build,*.egg .; python setup test;"
+  - pip install pep8 --use-mirrors
+script:
+  - pep8 --repeat --show-source --exclude=.venv,.tox,dist,doc,build,*.egg .
+  - python setup.py test
 services:
   - redis-server
 matrix:
