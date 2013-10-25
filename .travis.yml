@@ -7,12 +7,14 @@ python:
 install:
   - pip install -e . --use-mirrors
   - pip install pep8 --use-mirrors
+  - pip install nose --use-mirrors
 script:
   - pep8 --repeat --show-source --exclude=.venv,.tox,dist,doc,build,*.egg .
-  - python setup.py test
+  - nosetests
 services:
   - redis-server
 matrix:
   include:
     - python: "2.7"
     - python: "3.3"
+    - pyhton: "pypy"
