@@ -14,8 +14,3 @@ script:
   - nosetests
 services:
   - redis-server
-matrix:
-  include:
-    - python: "2.7"
-    - python: "3.3"
-    - pyhton: "pypy"
