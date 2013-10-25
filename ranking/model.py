@@ -61,14 +61,14 @@ class Ranking(object):
             pipe.execute()
 
         self._rank = self.__get_rank(pipe)
-        self._score = self.__score(pipe) 
+        self._score = self.__score(pipe)
 
     @classmethod
     def get_range(cls, key, begin, end, client=None, **kwargs):
         if not client:
             client = redis.StrictRedis(**kwargs)
 
-        range_data = client.zrevrange(key, begin - 1, end -1, withscores=True)
+        range_data = client.zrevrange(key, begin - 1, end - 1, withscores=True)
         if cls.EXPIRE:
             client.expire(key, cls.EXPIRE)
         return [cls(key, unique_id, client=client, score=score)
