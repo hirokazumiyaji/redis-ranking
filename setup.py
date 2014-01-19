@@ -4,7 +4,7 @@
 try:
     from setuptools import setup
 except ImportError:
-    from distuutils.core import setup
+    from distutils.core import setup
 
 
 setup(
