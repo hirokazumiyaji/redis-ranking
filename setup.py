@@ -12,7 +12,7 @@ setup(
     version='0.0.1',
     description='Python Ranking using Redis',
     long_description='',
-    url='http://github.com/HirokazuMiyaji/redis_ranking',
+    url='http://github.com/HirokazuMiyaji/redis-ranking',
     author='Hirokazu Miyaji',
     maintainer_email='hirokazu.miyaji@gmail.com',
     keywords=['Redis', 'Ranking', 'redis', 'ranking'],
